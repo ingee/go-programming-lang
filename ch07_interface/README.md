@@ -9,19 +9,61 @@
 * 구상타입 vs. 추상타입
 * 지금까지 살펴본 모든 타입은 구상타입(concrete type)
 * 인터페이스는 추상타입
-
 * io.Writer 인터페이스 소개
-```go
-package fmt
-func Fprintf(w io.Writer, format string, args ...interface{}) (int, error)
-```
-```go
-package io
-type Writer interface{
-  Write(p []byte) (n int, err error)
-}
-```
-
+  ```go
+  package fmt
+  func Fprintf(w io.Writer, format string, args ...interface{}) (int, error)
+  ```
+  ```go
+  package io
+  type Writer interface{
+    Write(p []byte) (n int, err error)
+  }
+  ```
 * 대체가능성(substituability) - 다형성
-[io.Writer 인터페이스 구현체 - bytecounter](./bytecounter/bytecounter.go)
-[main.go - p197](./main.go)
+  [io.Writer 인터페이스 구현체 - bytecounter](./bytecounter/bytecounter.go)
+  [main.go - p197](./main.go)
+
+## 7.2 인터페이스 타입
+* 인터페이스 타입 - 인터페이스로 인식되기 위해 필요한 메소드를 선언
+* 1개 메소드로만 구성되는 인터페이스의 이름은 XXXer로 명명
+* 적은 수의 메소드로 인터페이스를 구성하는 것이 베스트프랙틱스
+  ```go
+  package io
+  type Reader interface {
+    Read(p []byte) (n int, err error)
+  }
+  type Closer interface {
+    Close() error
+  }
+  ```
+  ```go
+  //인터페이스 내장 (embedding) 선언
+  type ReadWriter interface {
+    Reader
+    Writer
+  }
+  type ReadWriteCloser interface {
+    Reader
+    Writer
+    Closer
+  }
+  ```
+
+## 7.3 인터페이스 충족 (Interface Satisfaction)
+* 어떤 타입이 인터페이스가 요구하는 모든 메소드를 제공하면
+  '해당 타입이 해당 인터페이스를 충족한다(satisfy)'고 한다
+  [interface satisfaction](./satisfy.go)
+* 인터페이스 타입 변수는 인터페이스에 정의된 메소드만 호출 가능하다
+  [interface spec](./spec-only.go)
+* 빈 인터페이스 interface{} 타입 변수에는 어떤 값도 할당 가능하다
+  ```go
+  var any interface{}
+  any = true
+  any = 12.34
+  any = "hello"
+  any = map[string]int{"one": 1}
+  any = new(bytes.Buffer)
+  ```
+* 기존 타입(concrete type)을 변경하지 않고도
+  새 인터페이스 타입(abstract type)를 생성/추상화할 수 있다
