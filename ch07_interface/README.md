@@ -65,5 +65,24 @@
   any = map[string]int{"one": 1}
   any = new(bytes.Buffer)
   ```
-* 기존 타입(concrete type)을 변경하지 않고도
+* Go에서는 기존 타입(concrete type)을 변경하지 않고도
   새 인터페이스 타입(abstract type)를 생성/추상화할 수 있다
+
+## 7.4 flag.Value로 플래그 분석
+* flag.Value로 cli param 처리하기
+  [sleep.go](./sleep.go)
+* flag.Value 인터페이스 in-depth
+  ```go
+  package flag
+  type Value interface {
+    String() string
+    Set(string) error
+  }
+  ```
+  * 모든 flag.Value는 fmt.Stringer
+  * Set() 메소드는 String 메소드의 반대 (get/set 관계)
+* 기존 정의된 타입(Celsius 구조체)을 이용, flag.Value 인터페이스 구현체 만들기
+  [tempconv.go](./tempconv.go)
+  * String() 메소드를 이미 지원하고 있는 Celsius 타입에
+    Set() 메소드를 추가하여 celsiusFlag 타입을 정의하는 샘플
+  * 특이점 - struct 타입을 정의하면서 프리미티브 타입을 임베딩
