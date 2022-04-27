@@ -104,3 +104,34 @@
 * nil-인터페이스 vs nil-valued-인터페이스
   [nil-check](./nil-check.go)
   * nil valued 인터페이스는 nil이 아님
+
+## 7.6 sort.Interface로 정렬
+* sort.Interface 인터페이스 타입
+  ```go
+  package sort
+  type Interface interface {
+    Len() int
+    Less(i, j int) bool
+    Swap(i, j int)
+  }
+  ```
+* []string 데이터에 적용하여 sort 하는 예
+  ```go
+  // declared in /usr/local/go/src/sort/sort.go
+  type StringSlice []string
+  func (p StringSlice) Len() int      { return len(p) }
+  func (p StringSlice) Less(i, j int) { return p[i] < p[j] }
+  func (p StringSlice) Swap(i, j int) { p[i], p[j] = p[j], p[i] }
+
+  // 'sort' package usage
+  var names []string
+  // ... fill names ...
+  sort.Sort(StringSlice(names)) // sort []string
+  sort.Strings(names)           // 같은 결과
+  ```
+  * Swap 함수 구현 코드!
+  * 기존에 존재하는 type을 기반으로 새로운 interface로 재정의하는 것!
+* 음악 트랙에 적용하여 sort 하는 샘플
+  [track-sort.go](./track-sort.go)
+  * ```var tracks []*Track``` 구조체 포인터 초기화 literal 표현이 불편
+  ... p212 "printTracks 함수는..." ...
