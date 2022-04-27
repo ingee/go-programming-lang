@@ -86,3 +86,21 @@
   * String() 메소드를 이미 지원하고 있는 Celsius 타입에
     Set() 메소드를 추가하여 celsiusFlag 타입을 정의하는 샘플
   * 특이점 - struct 타입을 정의하면서 프리미티브 타입을 임베딩
+
+## 7.5 인터페이스 값
+* ```var w io.Writer = nil``` - 그림 7.1
+  * io.Writer 인터페이스 변수 w는 type 필드와 value 필드로 구성
+* ```var w io.Writer = os.Stdout``` - 그림 7.2
+  * os.Stdout의 type 정보가 w의 type 필드에 저장
+  * os.Stdout의 포인터 값이 w의 value 필드에 저장
+* ```var w io.Writer = new(bytes.Buffer)``` - 그림 7.3
+  * 새로 생성된 *bytes.Buffer의 type 정보가 w의 type 필드에 저장
+  * 새로 생성된 *bytes.Buffer의 포인터 값이 w의 value 필드에 저장
+* 인터페이스 값은 ==나 !=로 비교 가능
+  * 그래서, map의 key나 switch의 피연산자로 사용 가능
+  * type 필드가 같고 value 필드가 비교 가능해야 함 => 패닉 주의
+
+## 7.5.1 주의: nil 포인터가 있는 인터페이스는 nil이 아니다
+* nil-인터페이스 vs nil-valued-인터페이스
+  [nil-check](./nil-check.go)
+  * nil valued 인터페이스는 nil이 아님
