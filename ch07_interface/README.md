@@ -133,5 +133,4 @@
   * 기존에 존재하는 type을 기반으로 새로운 interface로 재정의하는 것!
 * 음악 트랙에 적용하여 sort 하는 샘플
   [track-sort.go](./track-sort.go)
-  * ```var tracks []*Track``` 구조체 포인터 초기화 literal 표현이 불편
-  ... p212 "printTracks 함수는..." ...
+  * 1 ~ 5 항목 체크
