@@ -1,13 +1,13 @@
-7장. 인터페이스 - p195~
+7장. 인터페이스 - p195
 ===
 
 * Go의 인터페이스는 묵시적으로 적용된다
   * 기존 타입을 변경하지 않고도 새 인터페이스를 생성할 수 있다
-  * 즉, 제어할 수 없는 패키지 타입을 사용할 수 있다
+  * 즉, 제어할 수 없는 패키지 타입을 사용해서 인터페이스를 정의할 수 있다
 
 ## 7.1 인터페이스 규약
-* 구상타입 vs. 추상타입
-* 지금까지 살펴본 모든 타입은 구상타입(concrete type)
+* 구상타입(concrete type) vs. 추상타입(abstract type)
+* 지금까지 살펴본 모든 타입은 구상타입
 * 인터페이스는 추상타입
 * io.Writer 인터페이스 소개
   ```go
@@ -87,15 +87,15 @@
     Set() 메소드를 추가하여 celsiusFlag 타입을 정의하는 샘플
   * 특이점 - struct 타입을 정의하면서 프리미티브 타입을 임베딩
 
-## 7.5 인터페이스 값
-* ```var w io.Writer = nil``` - 그림 7.1
+## 7.5 인터페이스 값 - p206
+* `var w io.Writer = nil` - 그림 7.1
   * io.Writer 인터페이스 변수 w는 type 필드와 value 필드로 구성
-* ```var w io.Writer = os.Stdout``` - 그림 7.2
+* `var w io.Writer = os.Stdout` - 그림 7.2
   * os.Stdout의 type 정보가 w의 type 필드에 저장
   * os.Stdout의 포인터 값이 w의 value 필드에 저장
-* ```var w io.Writer = new(bytes.Buffer)``` - 그림 7.3
-  * 새로 생성된 *bytes.Buffer의 type 정보가 w의 type 필드에 저장
-  * 새로 생성된 *bytes.Buffer의 포인터 값이 w의 value 필드에 저장
+* `var w io.Writer = new(bytes.Buffer)` - 그림 7.3
+  * 새로 생성된 `*bytes.Buffer`의 type 정보가 w의 type 필드에 저장
+  * 새로 생성된 `*bytes.Buffer`의 포인터 값이 w의 value 필드에 저장
 * 인터페이스 값은 ==나 !=로 비교 가능
   * 그래서, map의 key나 switch의 피연산자로 사용 가능
   * type 필드가 같고 value 필드가 비교 가능해야 함 => 패닉 주의
@@ -155,7 +155,7 @@
 * http4 - DefaultServeMux를 이용 코드를 더 간략하게 정리
   [http4.go](./http4.go)
 
-## 7.8 error 인터페이스
+## 7.8 error 인터페이스 - p220
 * error 도 인터페이스
   ```go
   type error interface {

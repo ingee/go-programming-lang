@@ -23,7 +23,7 @@ var tracks = []*Track{
 	{"Go", "Moby", "Moby", 1992, length("3m37s")},
 	{"Go Ahead", "Alicia Keys", "As I Am", 2007, length("4m36s")},
 	{"Ready 2 Go", "Martin Solveig", "Smash", 2011, length("4m24s")},
-} // 1: *Track 아이템 초기화 leteral이 불편하다
+} // 1: *Track 아이템 초기화 leteral이 낯설다
 
 func length(s string) time.Duration {
 	d, err := time.ParseDuration(s)
