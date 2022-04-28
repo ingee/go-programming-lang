@@ -134,3 +134,22 @@
 * 음악 트랙에 적용하여 sort 하는 샘플
   [track-sort.go](./track-sort.go)
   * 1 ~ 5 항목 체크
+
+## 7.7 http.Handler 인터페이스
+* http 패키지의 Handler 인터페이스 소개
+  * http 패키지의 ListenAndServe() 함수 호출에 필요
+  ```go
+  package http
+  type Handler interface {
+    ServeHTTP(w ResponseWriter, r *Request)
+  }
+  func ListenAndServe(address string, h Handler) error
+  ```
+* http1 - 재고 목록을 나열해서 응답하는 http 서버
+  [http1.go](./http1.go)
+* http2 - /list 와 /price endpoint를 제공하는 서버
+  [http2.go](./http2.go)
+* http3 - ServeMux 를 이용 switch 문으로 분기해서 서비스하던 path 별 로직을 분리
+  [http3.go](./http3.go)
+* http4 - DefaultServeMux를 이용 코드를 더 간략하게 정리
+  [http4.go](./http4.go)
