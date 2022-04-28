@@ -1,4 +1,4 @@
-7장. 인터페이스
+7장. 인터페이스 - p195~
 ===
 
 * Go의 인터페이스는 묵시적으로 적용된다
@@ -122,7 +122,8 @@
   func (p StringSlice) Len() int      { return len(p) }
   func (p StringSlice) Less(i, j int) { return p[i] < p[j] }
   func (p StringSlice) Swap(i, j int) { p[i], p[j] = p[j], p[i] }
-
+  ```
+  ```go
   // 'sort' package usage
   var names []string
   // ... fill names ...
@@ -153,3 +154,27 @@
   [http3.go](./http3.go)
 * http4 - DefaultServeMux를 이용 코드를 더 간략하게 정리
   [http4.go](./http4.go)
+
+## 7.8 error 인터페이스
+* error 도 인터페이스
+  ```go
+  type error interface {
+    Error() string
+  }
+  ```
+* error 인터페이스의 concrete type 샘플1 - errorString 구조체
+  * errors 패키지에 선언
+  * errors 패키지는 4줄 뿐
+  ```go
+  package errors
+  func New(text string) error { return &errorString{text} }
+  type errorString struct { text string }
+  func (e *errorString) Error() string { return e.text }
+  ```
+  * errorString 구조체는 Error() 메소드를 지원하기 때문에
+    error 인터페이스로 취급될 수 있다
+  * 에러값이 같다고 같은 에러로 취급하지 않기 위해
+    `*errorString` 을 error 타입으로 사용한다
+* error 인터페이스의 concrete type 샘플2 - syscall 패키지의 Errno 타입
+  * Errno 타입은 Error() 메소드를 지원하기 때문에
+    error 인터페이스로 취급될 수 있다
